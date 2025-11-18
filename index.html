@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENAI Montes Claros</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  * {margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat', sans-serif;}
+  body {
+    background:#f5f7fa;
+    color:#1b262c;
+    transition: all 0.4s ease;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+  }
+  body.dark-mode {background:#1c1c2b; color:#e5e5e5;}
+
+  /* Botão modo noturno */
+  .top-toggle {
+    position:absolute;
+    top:15px;
+    right:15px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(255,255,255,0.9);
+    padding:6px 12px;
+    border-radius:16px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.15);
+    font-size:14px;
+    font-weight:500;
+    z-index:10;
+    transition: all 0.3s;
+  }
+  body.dark-mode .top-toggle {background:rgba(40,40,60,0.9); color:#e5e5e5;}
+
+  .switch{position:relative; display:inline-block; width:50px; height:26px;}
+  .switch input{opacity:0;width:0;height:0;}
+  .slider{
+    position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0;
+    background-color:#ccc; transition:0.4s; border-radius:34px;
+  }
+  .slider:before{
+    position:absolute; content:""; height:22px; width:22px; left:2px; bottom:2px;
+    background-color:white; border-radius:50%; transition:0.4s;
+  }
+  input:checked + .slider{background-color:#2196f3;}
+  input:checked + .slider:before{transform:translateX(24px);}
+
+  /* Form container centralizado */
+  .form-container {
+    width:90%;
+    max-width:400px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+  }
+
+  .subtitle {font-size:16px; font-weight:500; color:#666; text-align:center;}
+  body.dark-mode .subtitle {color:#aaa;}
+
+  h1 {font-size:28px; font-weight:700; color:#2196f3; text-align:center;}
+
+  .field-card {
+    width:100%;
+    background:#fff;
+    border-radius:15px;
+    padding:15px 20px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    transition:all 0.3s;
+  }
+  body.dark-mode .field-card {background:#2a2a3d;}
+
+  .field-card label {
+    display:block;
+    font-weight:500;
+    margin-bottom:8px;
+    font-size:14px;
+    color:#444;
+  }
+  body.dark-mode .field-card label {color:#ccc;}
+
+  .field-card input, .field-card textarea {
+    width:100%;
+    padding:12px 15px;
+    font-size:15px;
+    border-radius:12px;
+    border:1px solid #ccc;
+    outline:none;
+    transition: all 0.3s;
+  }
+  .field-card input:focus, .field-card textarea:focus {
+    border-color:#2196f3;
+    box-shadow:0 0 12px rgba(33,150,243,0.15);
+  }
+  body.dark-mode .field-card input, body.dark-mode .field-card textarea {
+    background:#3a3a50; color:#e5e5e5; border-color:#555;
+  }
+  textarea {resize:none; min-height:80px;}
+
+  button {
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    color:#fff;
+    background:linear-gradient(90deg,#2196f3,#21cbf3);
+    transition:all 0.4s ease;
+  }
+  button:hover {background:linear-gradient(90deg,#1976d2,#21a1d2); transform:translateY(-1px);}
+
+  /* Card da senha dentro do formulário */
+  .senha-card{
+    width:100%;
+    background:linear-gradient(135deg,#e0f2f1,#b2dfdb);
+    border-radius:20px;
+    padding:25px;
+    font-size:28px;
+    font-weight:700;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,0.15);
+    margin-top:15px;
+    opacity:0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .senha-card.show{
+    opacity:1;
+    transform:scale(1.02);
+  }
+  body.dark-mode .senha-card {background:linear-gradient(135deg,#3a3a50,#4d4d70); color:#e5e5e5;}
+
+  /* Rodapé */
+  footer {
+    margin-top:25px;
+    font-size:12px;
+    color:#666;
+    text-align:center;
+  }
+  body.dark-mode footer {color:#aaa;}
+</style>
+</head>
+<body>
+
+<div class="top-toggle">
+  <span>Modo Noturno</span>
+  <label class="switch">
+    <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+    <span class="slider"></span>
+  </label>
+</div>
+
+<div class="form-container">
+  <div class="subtitle">SENAI Montes Claros CFP Luiz de Paula</div>
+  <h1>WI-FI - REDE AULA</h1>
+
+  <div class="field-card">
+    <label for="instrutor">Instrutor</label>
+    <input type="text" id="instrutor" placeholder="Digite o nome do instrutor">
+  </div>
+
+  <div class="field-card">
+    <label for="email">E-mail</label>
+    <input type="email" id="email" placeholder="Digite o e-mail do instrutor">
+  </div>
+
+  <div class="field-card">
+    <label for="data">Data</label>
+    <input type="date" id="data">
+  </div>
+
+  <div class="field-card">
+    <label for="obs">Observações</label>
+    <textarea id="obs" placeholder="Digite observações aqui..."></textarea>
+  </div>
+
+  <button onclick="gerarSenha()">Gerar Senha</button>
+
+  <div class="senha-card" id="senhaDisplay">
+    A senha aparecerá aqui
+  </div>
+</div>
+
+<footer>
+  © 2025 Montes Claros CFP Luiz de Paula. Todos os direitos reservados.
+</footer>
+
+<script>
+const senhas={
+  "2025-11-17":"12345678",
+  "2025-11-18":"87654321",
+  "2025-11-19":"11223344"
+};
+
+function gerarSenha(){
+  const instrutor=document.getElementById('instrutor').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const data=document.getElementById('data').value;
+  const display=document.getElementById('senhaDisplay');
+
+  if(!instrutor || !email || !data){
+    alert("Preencha todos os campos!");
+    return;
+  }
+
+  const senha=senhas[data];
+  display.textContent=senha || "Nenhuma senha cadastrada para essa data.";
+
+  // Mostrar card com animação
+  display.classList.remove('show');
+  void display.offsetWidth;
+  display.classList.add('show');
+}
+
+function toggleDarkMode(){document.body.classList.toggle('dark-mode');}
+</script>
+
+</body>
+</html>
